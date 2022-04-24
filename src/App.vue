@@ -1,19 +1,37 @@
 <template>
 <div>
-  <ToDoItem />
+  <ToDoItem @add="appendItem"/>
+  <ToDosList/>
+  <ul v-for="item of items" :key = "item">
+    <ul v-for="value in item" :key="value"> {{ value }}</ul>
+  </ul>
 </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ToDoItem from './components/ToDoItem.vue';
+import ToDosList from './components/ToDosList.vue';
+import ItemType from './types/Item' 
 
 export default defineComponent({
   name: 'App',
   components: {
-    ToDoItem
+    ToDoItem,
+    ToDosList,
+  },
+  data () {
+    return {
+      items: [] as ItemType[],
+    } 
+  },
+  methods: {
+    appendItem (value: ItemType) {
+      this.items.push(value)
+    }
   }
-});
+  
+})
 </script>
 
 <style>

@@ -4,6 +4,7 @@
   <form>
     <label>To-Do</label>
     <input type="text" required v-model="item.name" size="50">
+    <div v-if="nameError">{{ nameError }}</div>
 
     <label>Priority</label>
     <select v-model='item.priority'>
@@ -28,16 +29,20 @@ export default defineComponent({
         name: '',
         priority: 2,
         done: false,
+        id: 1,
       } as ItemType,
       nameError: '',
     } 
   },
   methods: {
     addToList() {
-      this.nameError = this.item.name === '' ?
-        'To-Do Items Cannot Be Empty' : ''
-      if (!this.nameError) {
-        this.$emit('add', this.item)
+      if (this.item.name === '') {
+        this.nameError = 'To-Do Items Cannot Be Empty'
+      } else {
+        this.$emit('add', Object.assign({}, this.item))        
+        this.nameError = ''        
+        this.item.id++
+        this.item.name = ''
       }
     }
   }
