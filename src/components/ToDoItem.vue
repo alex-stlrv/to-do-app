@@ -53,4 +53,23 @@ export default defineComponent({
 
 <style scoped>
 
+form label {
+  margin: 20px;
+  font-weight: bold;
+}
+
+form input {
+  margin: 20px;
+  font-size: 0.9rem;
+}
+
+form select {
+  font-size: 0.9rem;
+  margin: 20px
+}
+
+button {
+  font-size: 0.9rem;
+}
+
 </style>>

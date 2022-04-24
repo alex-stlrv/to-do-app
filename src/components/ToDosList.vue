@@ -1,22 +1,30 @@
 <template>
-    <div>
+    <div class="list">
         <div v-if="activeItems.length">
             <h1>Things To Do</h1>
-            <ul v-for="item of activeItems" :key = "item">
-                <p>{{ item.name }}</p>
-                <p>{{ mappedPriority(item.priority) }}</p>
-                <p>
-                    <label>Done</label>
-                    <input type="checkbox" @click='moveItemToInactive(item.id)'>
-                </p>
+            <div class="sort">
+                <button>Sort by Priority</button>
+                <button>Sort by Name</button>
+            </div>
+            <ul>
+                <li v-for="item of activeItems" :key = "item">
+                    <p class="name">{{ item.name }}</p>
+                    <p class="priority">{{ mappedPriority(item.priority) }}</p>
+                    <p class="done">
+                        <label class="checkbox">Done</label>
+                        <input class="checkbox" type="checkbox" @click='moveItemToInactive(item.id)'>
+                    </p>
+                </li>
             </ul>
         </div>
         <div v-if="inactiveItems.length">
             <h1>Deeds Done</h1>
-                <ul v-for="item of inactiveItems" :key = "item">
-                <p>{{ item.name }}</p>
-                <p>{{ mappedPriority(item.priority) }}</p>
-                <p>Done</p>
+               <ul>
+                    <li v-for="item of inactiveItems" :key = "item">
+                        <p class="name">{{ item.name }}</p>
+                        <p class="priority">{{ mappedPriority(item.priority) }}</p>
+                        <p class="done">Done</p>
+                    </li>
             </ul>
         </div>
     </div>
@@ -53,15 +61,60 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.list {
+    max-width: 800px;
+    margin: auto;
+}
+
+.sort {
+    display: flex; /*Targets each list containing the paragraphs*/
+    align-items: center; 
+    max-width: 400px;
+    margin: auto;   
+}
+
+.sort button {
+    flex: 0 0 50%;
+    margin: 0px 10px;
+    font-size: 0.9rem;
+}
+
 ul {
-display: flex; /*Targets each list containing the paragraphs*/
-padding: 0 20px;
-min-height: 50px;
+    padding: 0;
+    border: 1px solid #ddd;
 }
 
-ul p {
-flex: 0 0 25%; /*This is the sweet sauce*/
+li {
+    display: grid;
+    grid-template-columns: 70% 15% 15%;
+    grid-template-areas: "name priority done";
+    padding: 0px 20px;
+    border-bottom: 1px solid #ddd;
 }
 
+.name {
+    grid-area: name;
+    text-align: left;
+}
+
+.priority {
+    grid-area: priority;    
+    text-align: left;
+}
+
+.done {
+    grid-area: done;    
+    text-align: left;
+}
+
+h1 {
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.checkbox {
+    padding: 0px 2px;
+    margin: 0px 2px;
+}
 
 </style>
