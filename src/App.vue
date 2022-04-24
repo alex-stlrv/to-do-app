@@ -1,10 +1,7 @@
 <template>
 <div>
   <ToDoItem @add="appendItem"/>
-  <ToDosList/>
-  <ul v-for="item of items" :key = "item">
-    <ul v-for="value in item" :key="value"> {{ value }}</ul>
-  </ul>
+  <ToDosList :activeItems="activeItems" :inactiveItems="inactiveItems" @move="moveItem"/>
 </div>
 </template>
 
@@ -22,13 +19,21 @@ export default defineComponent({
   },
   data () {
     return {
-      items: [] as ItemType[],
+      activeItems: [] as ItemType[],
+      inactiveItems: [] as ItemType[],
     } 
   },
   methods: {
     appendItem (value: ItemType) {
-      this.items.push(value)
-    }
+      this.activeItems.push(value)
+    },
+    moveItem (id: number) {
+      console.log(id)
+      const todo = this.activeItems.filter(item => item.id === id)
+      this.activeItems = this.activeItems.filter(item => item.id !== id)
+      this.inactiveItems.push(...todo)
+    },
+
   }
   
 })

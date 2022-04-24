@@ -39,12 +39,13 @@ export default defineComponent({
       if (this.item.name === '') {
         this.nameError = 'To-Do Items Cannot Be Empty'
       } else {
+        this.item.priority= Number(this.item.priority) as 1 | 2 | 3
         this.$emit('add', Object.assign({}, this.item))        
         this.nameError = ''        
         this.item.id++
         this.item.name = ''
       }
-    }
+    },
   }
 });
 </script>
