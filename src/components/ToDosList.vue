@@ -3,11 +3,11 @@
         <div v-if="activeItems.length">
             <h1>Things To Do</h1>
             <div class="sort">
-                <button>Sort by Priority</button>
-                <button>Sort by Name</button>
+                <button @click="prioritySorted">Sort by Priority</button>
+                <button @click="nameSorted">Sort by Name</button>
             </div>
             <ul>
-                <li v-for="item of activeItems" :key = "item">
+                <li v-for="item of activeItemsCopy" :key = "item">
                     <p class="name">{{ item.name }}</p>
                     <p class="priority">{{ mappedPriority(item.priority) }}</p>
                     <p class="done">
@@ -18,7 +18,7 @@
             </ul>
         </div>
         <div v-if="inactiveItems.length">
-            <h1>Deeds Done</h1>
+            <h1>Done Deeds</h1>
                <ul>
                     <li v-for="item of inactiveItems" :key = "item">
                         <p class="name">{{ item.name }}</p>
@@ -32,11 +32,25 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
+import ItemType from '../types/Item' 
 
 export default defineComponent({
   name: 'ToDoItem',
   props: ['activeItems', 'inactiveItems'],
+  data () {
+    return {
+        activeItemsCopy: [] as ItemType[],
+    }
+  },
+  watch: {
+    'activeItems': {
+      handler(activeToDoItems: ItemType[]) {
+        this.activeItemsCopy = [...activeToDoItems]
+      },
+      immediate: true,
+      deep: true,
+    }
+  },
   computed: {
     mappedPriority () {
         return (priority: 1 | 2 | 3 ): string => {
@@ -50,11 +64,35 @@ export default defineComponent({
         }
         return response
         }
-    } 
+    }
   },
   methods: {
     moveItemToInactive (id: number) {
         this.$emit('move', id)
+    },
+    prioritySorted () {
+        this.activeItemsCopy.sort(this.priorityRank)
+    },
+    nameSorted () {
+        this.activeItemsCopy.sort(this.nameRank)
+    },
+    priorityRank(a: ItemType, b: ItemType): -1 | 0 | 1 {
+        let result = 0 as -1 | 0 | 1
+        if (a.priority > b.priority) {
+            result = 1
+        } else if (a.priority < b.priority) {
+            result = -1 
+        }
+        return result
+    },
+    nameRank(a: ItemType, b: ItemType): -1 | 0 | 1 {
+        let result = 0 as -1 | 0 | 1
+        if (a.name > b.name) {
+            result = 1
+        } else if (a.name < b.name) {
+            result = -1 
+        }
+        return result
     }
   }
 });

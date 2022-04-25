@@ -28,7 +28,6 @@ export default defineComponent({
       this.activeItems.push(value)
     },
     moveItem (id: number) {
-      console.log(id)
       const todo = this.activeItems.filter(item => item.id === id)
       this.activeItems = this.activeItems.filter(item => item.id !== id)
       this.inactiveItems.push(...todo)

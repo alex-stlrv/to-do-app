@@ -4,7 +4,6 @@
   <form>
     <label>To-Do</label>
     <input type="text" required v-model="item.name" size="50">
-    <div v-if="nameError">{{ nameError }}</div>
 
     <label>Priority</label>
     <select v-model='item.priority'>
@@ -12,7 +11,8 @@
       <option value=2>Medium</option>
       <option value=3>Low</option>
     </select>
-  </form>
+  </form>      
+  <div id="error-message" v-if="nameError">{{ nameError }}</div>
   <button @click="addToList">Add Me!</button>
 </div>
 </template>
@@ -69,6 +69,11 @@ form select {
 }
 
 button {
+  font-size: 0.9rem;
+}
+
+#error-message {
+  margin: 10px;
   font-size: 0.9rem;
 }
 
