@@ -1,6 +1,12 @@
 # to-do-app
 
-## Project setup
+### About
+
+Add To-Do Items, Sort Them by Name or Priority and Mark them as Done.
+
+This Vue app can be previewed on [Netlify](https://627c483bc9b23822b93df709--curious-pudding-9ee612.netlify.app/)
+
+### Project setup
 ```
 yarn install
 ```
